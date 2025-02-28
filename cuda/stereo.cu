@@ -48,7 +48,7 @@ __device__ float correlationCoefficient(int *l, int *r, int width, int height, i
 
             left[i] = l[(pX + x) + (y + pY) * wSize];
             right[i] = r[(pX + x + offset) + (y + pY) * wSize]
-        }
+                }
     }
 
     // common parameters
