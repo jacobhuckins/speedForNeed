@@ -6,6 +6,8 @@
 #include <cuda.h>
 #include <cuda_runtime.h>
 
+// comment
+
 __device__ double vectorDotProduct(double *vA, double *vB, int size)
 {
     // declare shared memory variable
