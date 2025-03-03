@@ -47,7 +47,7 @@ __device__ double naiveCorrelation(int *l, int *r, int width, int height, int pX
     }
 }
 
-// run for each pixel to the left? of the pixel to compare
+// run for each pixel to the left of the pixel to compare
 __device__ void correlationCoefficient(int *l, int *r, int width, int height, int pX, int pY, int wSize, double *out)
 {
     int offset = threadIdx.x;
@@ -73,7 +73,7 @@ __device__ void correlationCoefficient(int *l, int *r, int width, int height, in
 
             left[adjustedSize] = l[(pX + x) + (y + pY) * wSize];
                                     // + or - offset depending on slide direction
-            right[adjustedSize] = r[(pX + x + offset) + (y + pY) * wSize] adjustedSize++;
+            right[adjustedSize] = r[(pX + x - offset) + (y + pY) * wSize] adjustedSize++;
         }
     }
 
@@ -117,8 +117,8 @@ __global__ void matchLR(int *l, int *r, int *out, int width, int height, int win
     int x = blockIdx.x * blockDim.x + threadIdx.x;
     int y = blockIdx.y * blockDim.y + threadIdx.y;
 
-    // compute the correlation coefficient of a sliding the window -> []
-    int threads = width; // nnumber of windows to compare, only moving left? right
+    // compute the correlation coefficient of the sliding the window frames
+    int threads = x; // number of windows to compare, only sliding left
     double coefficients[threads] = {};
     dim3 blockSize(threads);
     dim3 gridSize(1);
